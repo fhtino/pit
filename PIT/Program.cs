@@ -20,6 +20,21 @@ namespace PIT
         {
             try
             {
+                Console.WriteLine($"PIT.exe - ver. {Assembly.GetExecutingAssembly().GetName().Version}");
+                Console.WriteLine();
+
+                if (args.Contains("--help", StringComparer.InvariantCultureIgnoreCase))
+                {
+                    Console.WriteLine("Usage: PIT.EXE [folderName] [flags]");
+                    Console.WriteLine("");
+                    Console.WriteLine("Flags:");
+                    Console.WriteLine("  --dironly    : process directories only");
+                    Console.WriteLine("  --brokenonly : show only directories and files with broken permissions inheritance");
+                    Console.WriteLine("");
+                    return;
+                }
+
+
                 // Flags
                 _dirOnly = args.Contains("--dironly", StringComparer.InvariantCultureIgnoreCase);
                 _brokenOnly = args.Contains("--brokenonly", StringComparer.InvariantCultureIgnoreCase);
@@ -30,8 +45,7 @@ namespace PIT
                 startPath = Path.GetFullPath(startPath);
 
                 // Do work
-                Console.WriteLine($"PIT.exe - ver. {Assembly.GetExecutingAssembly().GetName().Version}");
-                Console.WriteLine();
+                
                 Console.WriteLine($"Processing: {startPath}");
                 Console.WriteLine();
                 Traverse(startPath, 0);
